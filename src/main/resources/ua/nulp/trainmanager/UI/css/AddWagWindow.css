@@ -1,0 +1,16 @@
+#VTCON {
+    -fx-background-color: #339933;
+    -fx-padding: 20px
+}
+
+#header {
+    -fx-font-size: 48px; -fx-font-weight: bold; -fx-text-fill: white
+}
+
+#VCCON {
+    -fx-background-color: #C0F0C0;
+    -fx-alignment: center
+}
+#HCCON {
+    -fx-alignment: center
+}

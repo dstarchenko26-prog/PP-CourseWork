@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane
+        fx:id="root"
+        xmlns="http://javafx.com/javafx"
+        xmlns:fx="http://javafx.com/fxml"
+        fx:controller="ua.nulp.trainmanager.UI.controllers.TrainsFilterUIController"
+        stylesheets="@css/TrainsFilter.css">
+
+    <top>
+        <VBox fx:id="VTCON" alignment="CENTER">
+            <Label fx:id="header">Фільтр поїздів</Label>
+        </VBox>
+    </top>
+
+    <center>
+        <VBox fx:id="VCCON">
+            <HBox fx:id="HCCON">
+                <GridPane fx:id="gridPaneC" hgap="25.0" vgap="10.0">
+                    <Label text="Назва:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                    <TextField fx:id="tfName" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                    <Label text="Максимальна вага:" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+                    <TextField fx:id="tfMaxWeight" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+                    <Label text="Мінімальна швидкість:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <TextField fx:id="tfMinSpeed" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+                    <Label text="Максимальна швидкість:" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
+                    <TextField fx:id="tfMaxSpeed" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+                    <Label text="Мінімальна тяга:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <TextField fx:id="tfMinTrac" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                    <Label text="Максимальний розхід:" GridPane.rowIndex="2" GridPane.columnIndex="2"/>
+                    <TextField fx:id="tfMaxCons" GridPane.rowIndex="2" GridPane.columnIndex="3"/>
+                    <Label text="Мінімальна пасажироємкість:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                    <TextField fx:id="tfMinPass" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+                    <Label text="Мінімальна вантажеємкість:" GridPane.rowIndex="3" GridPane.columnIndex="2"/>
+                    <TextField fx:id="tfMinCargo" GridPane.rowIndex="3" GridPane.columnIndex="3"/>
+                </GridPane>
+            </HBox>
+        </VBox>
+    </center>
+
+    <bottom>
+        <VBox fx:id="VBCON">
+            <GridPane fx:id="gridPaneB" xmlns:fx="http://javafx.com/fxml" hgap="20" vgap="10">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="50" hgrow="ALWAYS"/>
+                    <ColumnConstraints percentWidth="50" hgrow="ALWAYS"/>
+                </columnConstraints>
+
+                <Button fx:id="prevBTN" maxWidth="Infinity" GridPane.columnIndex="0"></Button>
+                <Button fx:id="filtBTN" maxWidth="Infinity" GridPane.columnIndex="1"></Button>
+            </GridPane>
+        </VBox>
+    </bottom>
+</BorderPane>

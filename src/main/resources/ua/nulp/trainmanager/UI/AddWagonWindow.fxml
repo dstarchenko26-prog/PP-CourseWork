@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane
+        fx:id="root"
+        xmlns="http://javafx.com/javafx"
+        xmlns:fx="http://javafx.com/fxml"
+        fx:controller="ua.nulp.trainmanager.UI.controllers.AddWagonWindowUIController"
+        stylesheets="@css/AddWagWindow.css">
+
+    <top>
+        <VBox fx:id="VTCON" alignment="CENTER">
+            <Label fx:id="header">Новий вагон</Label>
+        </VBox>
+    </top>
+
+    <center>
+        <VBox fx:id="VCCON">
+            <HBox fx:id="HCCON">
+                <GridPane fx:id="gridPane" xmlns:fx="http://javafx.com/fxml" hgap="30" vgap="10">
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="33.33" hgrow="ALWAYS"/>
+                        <ColumnConstraints percentWidth="33.33" hgrow="ALWAYS"/>
+                        <ColumnConstraints percentWidth="33.33" hgrow="ALWAYS"/>
+                    </columnConstraints>
+
+                    <Button fx:id="locBTN" maxWidth="Infinity" GridPane.columnIndex="0"></Button>
+                    <Button fx:id="cargoBTN" maxWidth="Infinity" GridPane.columnIndex="1"></Button>
+                    <Button fx:id="passBTN" maxWidth="Infinity" GridPane.columnIndex="2"></Button>
+                </GridPane>
+            </HBox>
+        </VBox>
+    </center>
+
+</BorderPane>

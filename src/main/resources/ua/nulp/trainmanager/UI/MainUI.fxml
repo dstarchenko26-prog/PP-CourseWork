@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane
+        fx:id="root"
+        xmlns="http://javafx.com/javafx"
+        xmlns:fx="http://javafx.com/fxml"
+        fx:controller="ua.nulp.trainmanager.UI.controllers.MainUIController"
+        stylesheets="@css/Main.css">
+
+    <top>
+        <VBox alignment="CENTER" style="
+            -fx-background-color: #339933; -fx-padding: 20px
+        ">
+            <Label fx:id="header" style="
+            -fx-font-size: 48px; -fx-font-weight: bold; -fx-text-fill: white
+        ">Головне меню</Label>
+        </VBox>
+    </top>
+
+    <center>
+        <VBox style="
+        -fx-background-color: #C0F0C0
+        "
+        alignment="CENTER" BorderPane.alignment="CENTER"
+        spacing="15"
+        >
+            <Button fx:id="wmo" onAction="#wagonsMenuOpen" styleClass="mui-button" prefWidth="400" prefHeight="40" text="Меню вагонів"></Button>
+            <Button fx:id="tmo" onAction="#trainsMenuOpen" styleClass="mui-button" prefWidth="400" prefHeight="40" text="Меню поїздів"></Button>
+            <Button fx:id="io" onAction="#infoOpen" styleClass="mui-button" prefWidth="400" prefHeight="40" text="Інфо"></Button>
+            <Button fx:id="ee" onAction="#exitEvent" styleClass="mui-button" prefWidth="400" prefHeight="40" text="Вихід"></Button>
+        </VBox>
+    </center>
+</BorderPane>

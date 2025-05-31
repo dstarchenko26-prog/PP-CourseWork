@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane
+        fx:id="root"
+        xmlns="http://javafx.com/javafx"
+        xmlns:fx="http://javafx.com/fxml"
+        fx:controller="ua.nulp.trainmanager.UI.controllers.InfoUIController"
+        stylesheets="@css/Info.css">
+
+    <top>
+        <VBox fx:id="VTCON" alignment="CENTER">
+            <Label fx:id="header">Інформація</Label>
+        </VBox>
+    </top>
+
+    <center>
+        <VBox fx:id="VCCON" alignment="CENTER">
+            <HBox fx:id="HCCON" alignment="CENTER">
+            <GridPane fx:id="gridPaneCV"  xmlns:fx="http://javafx.com/fxml" hgap="10" vgap="10">
+                <rowConstraints>
+                    <RowConstraints percentHeight="50" vgrow="ALWAYS"/>
+                    <RowConstraints percentHeight="50" vgrow="ALWAYS"/>
+                </rowConstraints>
+
+                <BorderPane maxHeight="Infinity" GridPane.rowIndex="0">
+                    <top>
+                        <VBox styleClass="VCTCON">
+                            <Label styleClass="header2">Вагони:</Label>
+                        </VBox>
+                    </top>
+
+                    <center>
+                        <VBox styleClass="VCCCON">
+                            <GridPane fx:id="gridPaneCW"  xmlns:fx="http://javafx.com/fxml" hgap="10" vgap="10">
+                                <columnConstraints>
+                                    <ColumnConstraints percentWidth="50" hgrow="ALWAYS"/>
+                                    <ColumnConstraints percentWidth="50" hgrow="ALWAYS"/>
+                                </columnConstraints>
+
+                                <VBox maxWidth="Infinity" GridPane.columnIndex="0">
+                                    <Label styleClass="header3">3 типи вагонів:</Label>
+                                    <Label styleClass="p">- Локомотив</Label>
+                                    <Label styleClass="p">- Пасажирський</Label>
+                                    <Label styleClass="p">- Вантажний</Label>
+                                </VBox>
+
+                                <VBox maxWidth="Infinity" GridPane.columnIndex="1">
+                                    <Label styleClass="header3">Передбачено можливість:</Label>
+                                    <Label styleClass="p">- Додавати нові вагони</Label>
+                                    <Label styleClass="p">- Видаляти вагони</Label>
+                                    <Label styleClass="p">- Шукати вагони за певними ознаками</Label>
+                                    <Label styleClass="p">- Переглядати додані вагони</Label>
+                                </VBox>
+                            </GridPane>
+                        </VBox>
+                    </center>
+                </BorderPane>
+
+                <BorderPane maxHeight="Infinity" GridPane.rowIndex="1">
+                    <top>
+                        <VBox styleClass="VCTCON">
+                            <Label styleClass="header2">Потяги:</Label>
+                        </VBox>
+                    </top>
+
+                    <center>
+                        <VBox styleClass="VCCCON">
+                            <GridPane fx:id="gridPaneCT"  xmlns:fx="http://javafx.com/fxml" hgap="10" vgap="10">
+                                <columnConstraints>
+                                    <ColumnConstraints percentWidth="33.3" hgrow="ALWAYS"/>
+                                    <ColumnConstraints percentWidth="33.3" hgrow="ALWAYS"/>
+                                    <ColumnConstraints percentWidth="33.3" hgrow="ALWAYS"/>
+                                </columnConstraints>
+
+                                <VBox maxWidth="Infinity" GridPane.columnIndex="0">
+                                    <Label styleClass="header3">Передбачено можливість:</Label>
+                                    <Label styleClass="p">- Створювати нові потяги</Label>
+                                    <Label styleClass="p">- Видаляти потяги</Label>
+                                    <Label styleClass="p">- Шукати потяги за певними ознаками</Label>
+                                    <Label styleClass="p">- Переглядати вже створені потяги</Label>
+                                    <Label styleClass="p">- Редагувати потяги</Label>
+                                </VBox>
+
+                                <VBox maxWidth="Infinity" GridPane.columnIndex="1">
+                                    <Label styleClass="header3">Редагування потягів:</Label>
+                                    <Label styleClass="p">- Додавання нових вагонів</Label>
+                                    <Label styleClass="p">- Видалення вагонів</Label>
+                                    <Label styleClass="p">- Сортування вагонів</Label>
+                                    <Label styleClass="p">- Вага не може перевищувати тягу</Label>
+                                </VBox>
+
+                                <VBox maxWidth="Infinity" GridPane.columnIndex="2">
+                                    <Label styleClass="header3">Сортування (пріорітет):</Label>
+                                    <Label styleClass="p">- Локомотиви(більша тяга)</Label>
+                                    <Label styleClass="p">- Пасажирські вагони(більший комфорт, більше місць)</Label>
+                                    <Label styleClass="p">- Вантажні вагони(більша ємність)</Label>
+                                </VBox>
+                            </GridPane>
+                        </VBox>
+                    </center>
+                </BorderPane>
+            </GridPane>
+            </HBox>
+        </VBox>
+    </center>
+
+    <bottom>
+        <VBox fx:id="VBCON">
+            <GridPane fx:id="gridPaneB" xmlns:fx="http://javafx.com/fxml" hgap="20" vgap="10">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="100" hgrow="ALWAYS"/>
+                </columnConstraints>
+
+                <Button fx:id="prevBTN" maxWidth="Infinity" GridPane.columnIndex="0"></Button>
+            </GridPane>
+        </VBox>
+    </bottom>
+</BorderPane>

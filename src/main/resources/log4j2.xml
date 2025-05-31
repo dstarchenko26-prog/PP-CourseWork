@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    <Appenders>
+        <!-- File Appender -->
+        <File name="FileLogger" fileName="logs/app.log" append="true">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level: %msg%n%throwable"/>
+        </File>
+
+        <!-- SMTP Appender for errors -->
+        <SMTP name="EmailLogger"
+              subject="Критична помилка в Train Manager"
+              to="${env:LOG_EMAIL_USER}"
+              from="${env:LOG_EMAIL_USER}"
+              smtpHost="smtp.gmail.com"
+              smtpPort="465"
+              smtpUsername="${env:LOG_EMAIL_USER}"
+              smtpPassword="${env:LOG_EMAIL_PASS}"
+              bufferSize="10"
+              smtpProtocol="smtps">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} %-5level: %msg%n%throwable"/>
+            <ThresholdFilter level="error" onMatch="ACCEPT" onMismatch="DENY"/>
+        </SMTP>
+    </Appenders>
+
+    <Loggers>
+        <Root level="info">
+            <AppenderRef ref="FileLogger"/>
+            <AppenderRef ref="EmailLogger"/>
+        </Root>
+    </Loggers>
+</Configuration>

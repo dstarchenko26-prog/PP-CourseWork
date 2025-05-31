@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane
+        fx:id="root"
+        xmlns="http://javafx.com/javafx"
+        xmlns:fx="http://javafx.com/fxml"
+        fx:controller="ua.nulp.trainmanager.UI.controllers.TrainRedactorUIController"
+        stylesheets="@css/TrainRedactor.css">
+
+    <top>
+        <VBox fx:id="VTCON" alignment="CENTER">
+            <Label fx:id="header">Редагування поїзда</Label>
+        </VBox>
+    </top>
+
+    <center>
+        <BorderPane>
+            <top>
+                <HBox fx:id="VCTCON" alignment="CENTER">
+                    <GridPane fx:id="gridPane1" xmlns:fx="http://javafx.com/fxml" hgap="0">
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="25" hgrow="ALWAYS"></ColumnConstraints>
+                            <ColumnConstraints percentWidth="25" hgrow="ALWAYS"></ColumnConstraints>
+                            <ColumnConstraints percentWidth="25" hgrow="ALWAYS"></ColumnConstraints>
+                            <ColumnConstraints percentWidth="25" hgrow="ALWAYS"></ColumnConstraints>
+                        </columnConstraints>
+
+                        <Label fx:id="lName" styleClass="lInfo" GridPane.columnIndex="0" GridPane.rowIndex="0"></Label>
+                        <Label fx:id="lSpeed" styleClass="lInfo" GridPane.columnIndex="1" GridPane.rowIndex="0"></Label>
+                        <Label fx:id="lWeight" styleClass="lInfo" GridPane.columnIndex="2" GridPane.rowIndex="0"></Label>
+                        <Label fx:id="lTraction" styleClass="lInfo" GridPane.columnIndex="3" GridPane.rowIndex="0"></Label>
+                        <Label fx:id="lConsumption" styleClass="lInfo" GridPane.columnIndex="0" GridPane.rowIndex="1"></Label>
+                        <Label fx:id="lCargo" styleClass="lInfo" GridPane.columnIndex="1" GridPane.rowIndex="1"></Label>
+                        <Label fx:id="lPass" styleClass="lInfo" GridPane.columnIndex="2" GridPane.rowIndex="1"></Label>
+                        <Label fx:id="lLuggage" styleClass="lInfo" GridPane.columnIndex="3"  GridPane.rowIndex="1"></Label>
+                    </GridPane>
+                </HBox>
+            </top>
+            <center>
+                <VBox fx:id="VCCON">
+                    <HBox fx:id="HCCON">
+                        <ScrollPane fx:id="wagonList" fitToWidth="true">
+                            <GridPane fx:id="gridPaneC" xmlns:fx="http://javafx.com/fxml" hgap="20" vgap="10">
+                                <columnConstraints>
+                                    <ColumnConstraints percentWidth="50" hgrow="ALWAYS"/>
+                                    <ColumnConstraints percentWidth="50" hgrow="ALWAYS"/>
+                                </columnConstraints>
+                            </GridPane>
+                        </ScrollPane>
+                    </HBox>
+                </VBox>
+            </center>
+
+            <bottom>
+                <HBox fx:id="HCBCON" alignment="CENTER">
+                    <Label fx:id="lblError"></Label>
+                </HBox>
+            </bottom>
+        </BorderPane>
+    </center>
+
+    <bottom>
+        <VBox fx:id="VBCON">
+            <GridPane fx:id="gridPaneB" xmlns:fx="http://javafx.com/fxml" hgap="20" vgap="10">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="33.33" hgrow="ALWAYS"/>
+                    <ColumnConstraints percentWidth="33.33" hgrow="ALWAYS"/>
+                    <ColumnConstraints percentWidth="33.33" hgrow="ALWAYS"/>
+                </columnConstraints>
+
+                <Button fx:id="prevBTN" maxWidth="Infinity" GridPane.columnIndex="0"></Button>
+                <Button fx:id="sortBTN" maxWidth="Infinity" GridPane.columnIndex="1"></Button>
+                <Button fx:id="addBTN" maxWidth="Infinity" GridPane.columnIndex="2"></Button>
+            </GridPane>
+        </VBox>
+    </bottom>
+</BorderPane>

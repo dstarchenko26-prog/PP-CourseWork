@@ -1,0 +1,52 @@
+#VTCON {
+    -fx-background-color: #339933;
+    -fx-padding: 15px
+}
+
+#header {
+    -fx-font-size: 48px; -fx-font-weight: bold; -fx-text-fill: white
+}
+
+#VCCON {
+    -fx-background-color: #C0F0C0;
+    -fx-alignment: center
+}
+
+#VBCON {
+    -fx-background-color: #C0F0C0;
+    -fx-alignment: center
+}
+
+#gridPaneB {
+    -fx-padding: 10px
+}
+
+#gridPaneCV {
+    -fx-padding: 10px
+}
+
+.VCTCON {
+    -fx-alignment: center;
+    -fx-padding: 5px
+}
+
+.VCCCON {
+    -fx-alignment:center
+}
+
+.header2 {
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #226622
+}
+
+.header3 {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #339933
+}
+
+.p {
+    -fx-font-size: 18px;
+    -fx-text-fill: #339933;
+}

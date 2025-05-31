@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane
+        fx:id="root"
+        xmlns="http://javafx.com/javafx"
+        xmlns:fx="http://javafx.com/fxml"
+        fx:controller="ua.nulp.trainmanager.UI.controllers.TrainsMenuUIController"
+        stylesheets="@css/TrainsMenu.css">
+
+    <top>
+        <VBox fx:id="VTCON" alignment="CENTER">
+            <Label fx:id="header">Управління поїздами</Label>
+        </VBox>
+    </top>
+
+    <center>
+        <VBox fx:id="VCCON">
+            <HBox fx:id="HCCON">
+                <ScrollPane fx:id="trainList" fitToWidth="true">
+                    <GridPane fx:id="gridPaneC" xmlns:fx="http://javafx.com/fxml" hgap="20" vgap="10">
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="100" hgrow="ALWAYS"/>
+                        </columnConstraints>
+                    </GridPane>
+                </ScrollPane>
+            </HBox>
+        </VBox>
+    </center>
+
+    <bottom>
+        <VBox fx:id="VBCON">
+            <GridPane fx:id="gridPaneB" xmlns:fx="http://javafx.com/fxml" hgap="20" vgap="10">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="33.33" hgrow="ALWAYS"/>
+                    <ColumnConstraints percentWidth="33.33" hgrow="ALWAYS"/>
+                    <ColumnConstraints percentWidth="33.33" hgrow="ALWAYS"/>
+                </columnConstraints>
+
+                <Button fx:id="prevBTN" maxWidth="Infinity" GridPane.columnIndex="0"></Button>
+                <Button fx:id="filtBTN" maxWidth="Infinity" GridPane.columnIndex="1"></Button>
+                <Button fx:id="addBTN" maxWidth="Infinity" GridPane.columnIndex="2"></Button>
+            </GridPane>
+        </VBox>
+    </bottom>
+</BorderPane>

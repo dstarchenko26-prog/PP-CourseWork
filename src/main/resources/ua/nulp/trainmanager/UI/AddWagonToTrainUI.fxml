@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane
+        fx:id="root"
+        xmlns="http://javafx.com/javafx"
+        xmlns:fx="http://javafx.com/fxml"
+        fx:controller="ua.nulp.trainmanager.UI.controllers.AddWagonToTrainUIController"
+        stylesheets="@css/AddWagonToTrain.css">
+
+    <top>
+        <VBox fx:id="VTCON" alignment="CENTER">
+            <Label fx:id="header">Вибір вагона</Label>
+        </VBox>
+    </top>
+
+    <center>
+        <VBox fx:id="VCCON">
+            <HBox fx:id="HCCON">
+                <ScrollPane fx:id="wagonList" fitToWidth="true">
+                    <GridPane fx:id="gridPaneC" xmlns:fx="http://javafx.com/fxml" hgap="20" vgap="10">
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="50" hgrow="ALWAYS"/>
+                            <ColumnConstraints percentWidth="50" hgrow="ALWAYS"/>
+                        </columnConstraints>
+                    </GridPane>
+                </ScrollPane>
+            </HBox>
+        </VBox>
+    </center>
+
+    <bottom>
+        <VBox fx:id="VBCON">
+            <GridPane fx:id="gridPaneB" xmlns:fx="http://javafx.com/fxml" hgap="20" vgap="10">
+                <columnConstraints>
+                    <ColumnConstraints percentWidth="100" hgrow="ALWAYS"/>
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints percentHeight="20"></RowConstraints>
+                    <RowConstraints percentHeight="80"></RowConstraints>
+                </rowConstraints>
+
+                <HBox fx:id="HBGCON" maxHeight="Infinity" maxWidth="Infinity" GridPane.rowIndex="0">
+                    <Label fx:id="lblError"></Label>
+                </HBox>
+                <Button fx:id="prevBTN" maxHeight="Infinity" maxWidth="Infinity" GridPane.rowIndex="1"></Button>
+            </GridPane>
+        </VBox>
+    </bottom>
+</BorderPane>

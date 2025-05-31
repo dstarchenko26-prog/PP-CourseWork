@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane
+        fx:id="root"
+        xmlns="http://javafx.com/javafx"
+        xmlns:fx="http://javafx.com/fxml"
+        fx:controller="ua.nulp.trainmanager.UI.controllers.AddTrainWindowUIController"
+        stylesheets="@css/AddTrainWindow.css">
+
+    <top>
+        <VBox fx:id="VTCON" alignment="CENTER">
+            <Label fx:id="header">Новий поїзд</Label>
+        </VBox>
+    </top>
+
+    <center>
+        <VBox fx:id="VCCON">
+            <HBox fx:id="HCCON">
+                <GridPane hgap="30.0" vgap="10.0">
+                    <VBox styleClass="VGCON"  GridPane.rowIndex="0" GridPane.columnIndex="0">
+                        <Label text="Назва:"/>
+                    </VBox>
+                    <TextField fx:id="tfName" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+
+                    <VBox styleClass="VGCON" GridPane.rowIndex="2" GridPane.columnIndex="0">
+                        <Button text="Додати" fx:id="btnSubmit" />
+                    </VBox >
+                </GridPane>
+            </HBox>
+        </VBox>
+    </center>
+
+</BorderPane>

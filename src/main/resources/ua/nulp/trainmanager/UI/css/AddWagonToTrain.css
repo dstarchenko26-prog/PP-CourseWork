@@ -1,0 +1,63 @@
+#VTCON {
+    -fx-background-color: #339933;
+    -fx-padding: 20px
+}
+
+#header {
+    -fx-font-size: 48px; -fx-font-weight: bold; -fx-text-fill: white
+}
+
+#VCCON {
+    -fx-background-color: #C0F0C0;
+    -fx-alignment: center
+}
+
+#HCCON {
+    -fx-alignment: center
+}
+
+#VBCON {
+    -fx-background-color: #C0F0C0;
+    -fx-alignment: center
+}
+
+#gridPaneB {
+    -fx-padding: 20px
+}
+
+#gridPaneC {
+    -fx-padding: 20px;
+    -fx-background-color: #C0F0C0
+}
+
+#wagonList {
+    -fx-background-color: #C0F0C0
+}
+
+Label {
+    -fx-font-size: 20px;
+    -fx-text-fill: #339933
+}
+
+.gridPaneWI {
+    -fx-padding: 10px
+}
+
+.gridPaneWC {
+    -fx-background-color: #DDDDDD;
+    -fx-border-color: #339933;
+    -fx-border-width: 2px;
+    -fx-border-radius: 15px;
+    -fx-padding: 10px;
+    -fx-background-radius: 15px
+}
+
+#lblError {
+    -fx-text-fill: red;
+    -fx-font-weight: bold
+}
+
+#HBGCON {
+    -fx-background-color: #C0F0C0;
+    -fx-alignment: center
+}

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane
+        fx:id="root"
+        xmlns="http://javafx.com/javafx"
+        xmlns:fx="http://javafx.com/fxml"
+        fx:controller="ua.nulp.trainmanager.UI.controllers.AddCargoFormUIController"
+        stylesheets="@css/AddCargoForm.css">
+
+    <top>
+        <VBox fx:id="VTCON" alignment="CENTER">
+            <Label fx:id="header">Новий вантажний вагон</Label>
+        </VBox>
+    </top>
+
+    <center>
+        <VBox fx:id="VCCON">
+            <HBox fx:id="HCCON">
+                <GridPane hgap="30.0" vgap="10.0">
+                    <Label text="Назва:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <TextField fx:id="tfName" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                    <Label text="Швидкість:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <TextField fx:id="tfSpeed" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                    <Label text="Вага:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <TextField fx:id="tfWeight" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+                    <Label text="Місткість:" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+                    <TextField fx:id="tfCapacity" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+                    <Button text="Додати" fx:id="btnSubmit" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+
+                    <Label fx:id="lblError" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+                </GridPane>
+            </HBox>
+        </VBox>
+    </center>
+
+</BorderPane>
