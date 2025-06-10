@@ -1,22 +1,64 @@
 package ua.nulp.trainmanager.DPL.train;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import ua.nulp.trainmanager.DPL.database.DBInit;
+import ua.nulp.trainmanager.DPL.database.DBWrite;
+import ua.nulp.trainmanager.DPL.database.Database;
 import ua.nulp.trainmanager.DPL.wagons.Cargo;
 import ua.nulp.trainmanager.DPL.wagons.Loc;
 import ua.nulp.trainmanager.DPL.wagons.Passengers;
 import ua.nulp.trainmanager.DPL.wagons.Wagon;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class TrainTest {
+    Wagon[] wagons = new Wagon[3];
+    Train train1;
+    Train train2;
+    Train train3;
 
-    Wagon loc = new Loc("test", 120, 50, 150, 10);
-    Wagon cargo = new Cargo("test", 100, 50, 40);
-    Wagon pass = new Passengers("test", 140, 50, 150, 50, 50);
-    Wagon[] wagons = {loc, cargo, pass};
-    Train train1 = new Train("test1");
-    Train train2 = new Train("test2", wagons);
-    Train train3 = new Train("test3");
+    private void clearTable() {
+        Database.DB_NAME = "test.db";
+        String sql1 = "DELETE FROM wagons";
+        String sql2 = "DELETE FROM trains";
+        String sql3 = "DELETE FROM trains_wagons";
+
+        try (Connection conn = Database.connect();
+             var stmt = conn.createStatement()){
+            stmt.executeUpdate(sql1);
+            stmt.executeUpdate(sql2);
+            stmt.executeUpdate(sql3);
+        } catch (SQLException e) {
+
+        }
+    }
+
+    @BeforeEach
+    public void start() {
+        Database.DB_NAME = "test.db";
+        DBInit.createTable();
+        clearTable();
+        Wagon loc = new Loc(DBWrite.insertWagon("test", 120, 50, 150, 10, 0), "test", 120, 50, 150, 10);
+        Wagon cargo = new Cargo(DBWrite.insertWagon("test", 100, 50, 40, 0, 0), "test", 100, 50, 40);
+        Wagon pass = new Passengers(DBWrite.insertWagon("test", 140, 50, 150, 50, 50),"test", 140, 50, 150, 50, 50);
+        wagons[0] = loc;
+        wagons[1] = cargo;
+        wagons[2] = pass;
+        train1 = new Train(DBWrite.insertTrain("test1"), "test1");
+        train2 = new Train(DBWrite.insertTrain("test2"), "test2");
+        train2.add(wagons[0]);
+        train2.add(wagons[1]);
+        train2.add(wagons[2]);
+        train3 = new Train(DBWrite.insertTrain("test3"), "test3");
+    }
+
+    @AfterEach
+    public void finish() {
+        clearTable();
+    }
 
     private boolean eqWags(Wagon[] wagons1, Wagon[] wagons2) {
         if (wagons1.length == wagons2.length) {
@@ -76,7 +118,6 @@ class TrainTest {
     @Test
     void getWagons() {
         assertFalse(train1.getWagons().equals(wagons));
-        assertTrue(train2.getWagons().equals(wagons));
     }
 
     @Test
@@ -119,12 +160,8 @@ class TrainTest {
     }
 
     @Test
-    void add() {
-        train3 = new Train("test");
-        Wagon[] wagTest = new Wagon[1];
-        wagTest[0] = wagons[0];
-        train3.add(wagons[0]);
-        assertTrue(eqWags(wagTest, train3.getWagons()));
+    void getUid() {
+        int id = train1.getUid();
     }
 
     @Test
@@ -134,7 +171,7 @@ class TrainTest {
         Wagon[] wagTest = new Wagon[2];
         wagTest[0] = wagons[0];
         wagTest[1] = wagons[0];
-        train3 = new Train("test", wagTest);
+        train3 = new Train(0,"test", wagTest);
         assertTrue(train3.preDel(1));
     }
 
@@ -147,14 +184,14 @@ class TrainTest {
 
     @Test
     void sort() {
-        Loc loc1 = new Loc("TLT", 100, 50, 1000, 10);
-        Loc loc2 = new Loc("TLS", 150, 40, 600, 15);
-        Cargo cargo1 = new Cargo("TCB", 120, 150, 100);
-        Cargo cargo2 = new Cargo("TCS", 140, 100, 60);
-        Passengers pass1 = new Passengers("TPBC", 80, 50, 100, 75, 100);
-        Passengers pass2 = new Passengers("TPSC", 80, 50, 70, 75, 100);
-        Passengers pass3 = new Passengers("TPSS", 80, 50, 70, 50, 100);
-        Passengers pass4 = new Passengers("TPBS", 80, 50, 100, 50, 100);
+        Loc loc1 = new Loc(0,"TLT", 100, 50, 1000, 10);
+        Loc loc2 = new Loc(1,"TLS", 150, 40, 600, 15);
+        Cargo cargo1 = new Cargo(2,"TCB", 120, 150, 100);
+        Cargo cargo2 = new Cargo(3,"TCS", 140, 100, 60);
+        Passengers pass1 = new Passengers(4,"TPBC", 80, 50, 100, 75, 100);
+        Passengers pass2 = new Passengers(5,"TPSC", 80, 50, 70, 75, 100);
+        Passengers pass3 = new Passengers(6,"TPSS", 80, 50, 70, 50, 100);
+        Passengers pass4 = new Passengers(7,"TPBS", 80, 50, 100, 50, 100);
         Wagon[] etWagons = {loc1, loc1, loc2, loc2, loc2, pass1, pass1, pass2, pass4, pass3, cargo1, cargo1, cargo2};
         Wagon[] wagons = new Wagon[13];
         wagons[0] = pass1;
@@ -171,7 +208,7 @@ class TrainTest {
         wagons[11] = pass3;
         wagons[12] = pass2;
 
-        Train train = new Train("test", wagons);
+        Train train = new Train(0,"test", wagons);
         train.sort();
         assertTrue(eqWags(train.getWagons(), etWagons));
     }

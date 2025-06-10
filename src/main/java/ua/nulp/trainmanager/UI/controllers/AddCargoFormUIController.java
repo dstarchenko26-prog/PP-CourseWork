@@ -5,7 +5,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import ua.nulp.trainmanager.DPL.wagons.Cargo;
 import ua.nulp.trainmanager.DPL.DPL;
 import ua.nulp.trainmanager.util.Logger;
 
@@ -82,7 +81,7 @@ public class AddCargoFormUIController {
 
             lblError.setText("");
 
-            DPL.addWagon(new Cargo(name, speed, weight, capacity));
+            DPL.addWagon(name, speed, weight, capacity, 0, 0);
 
             Stage stage = (Stage) btnSubmit.getScene().getWindow();
             stage.close();

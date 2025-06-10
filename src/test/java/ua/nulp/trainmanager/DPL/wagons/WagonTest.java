@@ -8,8 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class WagonTest {
 
     class Wag extends Wagon {
-        Wag(String name, int speed, int weight) {
-            super(name, speed, weight);
+        Wag(int uid, String name, int speed, int weight) {
+            super(uid, name, speed, weight);
         }
     }
 
@@ -26,10 +26,10 @@ class WagonTest {
         return false;
     }
 
-    Wagon wag = new Wag("test", 10, 20);
-    Wagon loc = new Loc("test", 10, 20, 30, 40);
-    Wagon cargo = new Cargo("test", 10, 20, 30);
-    Wagon pass = new Passengers("test", 10, 20, 30, 40, 50);
+    Wagon wag = new Wag(0,"test", 10, 20);
+    Wagon loc = new Loc(1, "test", 10, 20, 30, 40);
+    Wagon cargo = new Cargo(2, "test", 10, 20, 30);
+    Wagon pass = new Passengers(3, "test", 10, 20, 30, 40, 50);
 
     @Test
     void getTraction() {

@@ -1,125 +1,68 @@
 package ua.nulp.trainmanager.DPL.database;
 
-import ua.nulp.trainmanager.DPL.train.Train;
-import ua.nulp.trainmanager.DPL.wagons.Wagon;
 import ua.nulp.trainmanager.util.Logger;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DBWrite {
-    public static void saveWagons(Wagon[] wagons, String sId) {
-        String[] tables = {"wagons", "loc", "cargo", "passengers"};
-        try (Connection conn = Database.connect();
-             Statement stmt = conn.createStatement()) {
-            for (String table : tables) {
-                stmt.executeUpdate("DELETE FROM " + table + sId);
-            }
-        } catch (SQLException e) {
-            Logger.error("Помилка при очищені таблиць", "");
-        }
-
-        for (int i = 0; i < wagons.length; i++) {
-            insertWagon(wagons[i], i, sId);
-        }
-        Logger.info("Інформація про вагони оновлена");
-    }
-
-    public static void saveTrains(Train[] trains, String sId) {
-        try (Connection conn = Database.connect();
-             Statement stmt = conn.createStatement()) {
-            stmt.executeUpdate("DELETE FROM trains" + sId);
-        } catch (SQLException e) {
-            Logger.error("Помилка при очищені таблиць", "");
-        }
-
-        for (int i = 0; i < trains.length; i++) {
-            insertTrain(trains[i], i, sId);
-        }
-    }
-
-    private static void insertWagon(Wagon wagon, int id, String sId) {
-
-        String sql1 = "INSERT INTO wagons" + sId + "(id, name, speed, weight, type) VALUES(?, ?, ?, ?, ?)";
-        int type;
-        String sql2;
-
-        if (wagon.getClass().getName().equals("ua.nulp.trainmanager.DPL.wagons.Loc")) {
-            type = 1;
-            sql2 = "INSERT INTO loc" + sId + "(id, traction, consumption) VALUES(?, ?, ?)";
-        } else if (wagon.getClass().getName().equals("ua.nulp.trainmanager.DPL.wagons.Cargo")) {
-            type = 2;
-            sql2 = "INSERT INTO cargo" + sId + "(id, capacity) VALUES(?, ?)";
-        } else {
-            type = 3;
-            sql2 = "INSERT INTO passengers" + sId + "(id, capacity, comfort, amountOfLuggage) VALUES (?, ?, ?, ?)";
-        }
+    public static int insertWagon(String name, int speed, int weight, int param1, int param2, int param3) {
+        String sql = "INSERT INTO wagons(name, speed, weight, param1, param2, param3) VALUES(?, ?, ?, ?, ?, ?)";
+        int id = -1;
 
         try (Connection conn = Database.connect();
-             var pstmt = conn.prepareStatement(sql1)) {
-            pstmt.setInt(1, id);
-            pstmt.setString(2, wagon.getName());
-            pstmt.setInt(3, wagon.getSpeed());
-            pstmt.setInt(4, wagon.getWeight());
-            pstmt.setInt(5, type);
+             var pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            pstmt.setString(1, name);
+            pstmt.setInt(2, speed);
+            pstmt.setInt(3, weight);
+            pstmt.setInt(4, param1);
+            pstmt.setInt(5, param2);
+            pstmt.setInt(6, param3);
             pstmt.executeUpdate();
+            try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                     id = generatedKeys.getInt(1);
+                } else {
+                    Logger.error("При додаванні вагона не вдалось повернути uid", "");
+                }
+            }
         } catch (SQLException e) {
-            Logger.error("Помилка при додавані в кор. таблицю вагонів", "");
+            Logger.error("Помилка при додавані в таблицю вагонів", "");
         }
-
-        switch (type) {
-            case 1: {
-                try (Connection conn = Database.connect();
-                     var pstmt = conn.prepareStatement(sql2)) {
-                    pstmt.setInt(1, id);
-                    pstmt.setInt(2, wagon.getTraction());
-                    pstmt.setInt(3, wagon.getConsumption());
-                    pstmt.executeUpdate();
-                } catch (SQLException e) {
-                    Logger.error("Помилка при додаванні в таблицю локомотивів", "");
-                }
-                break;
-            }
-            case 2: {
-                try (Connection conn = Database.connect();
-                     var pstmt = conn.prepareStatement(sql2)) {
-                    pstmt.setInt(1, id);
-                    pstmt.setInt(2, wagon.getCapacity());
-                    pstmt.executeUpdate();
-                } catch (SQLException e) {
-                    Logger.error("Помилка при додаванні в таблицю грузових вагонів", "");
-                }
-                break;
-            }
-            case 3: {
-                try (Connection conn = Database.connect();
-                     var pstmt = conn.prepareStatement(sql2)) {
-                    pstmt.setInt(1, id);
-                    pstmt.setInt(2, wagon.getCapacity());
-                    pstmt.setInt(3, wagon.getComfort());
-                    pstmt.setInt(4, wagon.getAmountOfLuggage());
-                    pstmt.executeUpdate();
-                } catch (SQLException e) {
-                    Logger.error("Помилка при додаванні в таблицю пасажирських вагонів", "");
-                }
-                break;
-            }
-        }
+        return id;
     }
 
-    private static void insertTrain(Train train, int id, String sId) {
-        String sql1 = "INSERT INTO trains"+ sId +"(id, name) VALUES(?, ?)";
-
+    public static int insertTrain(String name) {
+        String sql = "INSERT INTO trains(name) VALUES(?)";
+        int id = -1;
         try (Connection conn = Database.connect();
-             var pstmt = conn.prepareStatement(sql1)) {
-            pstmt.setInt(1, id);
-            pstmt.setString(2, train.getName());
+             var pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            pstmt.setString(1, name);
             pstmt.executeUpdate();
+            try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    id = generatedKeys.getInt(1);
+                } else {
+                    Logger.error("При додаванні поїзда не вдалось повернути uid", "");
+                }
+            }
         } catch (SQLException e) {
             Logger.error("Помилка при записі в таблицю поїздів", "");
         }
-        DBInit.createTableTrain((sId + String.valueOf(id)));
-        saveWagons(train.getWagons(), sId + String.valueOf(id));
+        return id;
+    }
+
+    public static void insertTrainWagons(int uid_t, int uid_w) {
+        String sql = "INSERT INTO trains_wagons(uid_t, uid_w) VALUES(?, ?)";
+        try (Connection conn = Database.connect();
+            var pstmt = conn.prepareStatement(sql)){
+            pstmt.setInt(1, uid_t);
+            pstmt.setInt(2, uid_w);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            Logger.error("Помилка при записі в таблицю приналежності вагонів", "");
+        }
     }
 }

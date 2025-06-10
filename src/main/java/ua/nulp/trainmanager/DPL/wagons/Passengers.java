@@ -5,15 +5,16 @@ public class Passengers extends Wagon{
     private final int comfort;
     private final int amountOfLuggage;
 
-    public Passengers(String name, int speed, int weight, int capacity, int comfort, int amountOfLuggage) {
-        super(name, speed, weight);
+    public Passengers(int uid, String name, int speed, int weight, int capacity, int comfort, int amountOfLuggage) {
+        super(uid, name, speed, weight);
         this.capacity = capacity;
         this.comfort = comfort;
         this.amountOfLuggage = amountOfLuggage;
     }
 
+    @Override
     public Passengers get() {
-        return new Passengers(getName(),getSpeed(),getWeight(),capacity,comfort,amountOfLuggage);
+        return new Passengers(getUid(), getName(),getSpeed(),getWeight(), getCapacity(),getComfort(),getAmountOfLuggage());
     }
 
     public String getString() {

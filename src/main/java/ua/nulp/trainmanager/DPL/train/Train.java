@@ -1,8 +1,11 @@
 package ua.nulp.trainmanager.DPL.train;
 
+import ua.nulp.trainmanager.DPL.database.DBDelete;
+import ua.nulp.trainmanager.DPL.database.DBWrite;
 import ua.nulp.trainmanager.DPL.wagons.Wagon;
 
 public class Train {
+    private final int uid;
     private final String name;
     private Wagon[] wagons = new Wagon[0];
     private int speed;
@@ -13,15 +16,19 @@ public class Train {
     private int capacityCargo;
     private int capacityLuggage;
 
-    public Train(String name) {
+    public Train(int uid, String name) {
+        this.uid = uid;
         this.name = name;
     }
 
-    public Train(String name, Wagon[] wagons) {
+    public Train(int uid, String name, Wagon[] wagons) {
+        this.uid = uid;
         this.name = name;
         this.wagons = wagons;
         update();
     }
+
+    public int getUid() {return uid;}
 
     public String getName() {
         return name;
@@ -72,6 +79,7 @@ public class Train {
     }
 
     public void add(Wagon wagon) {
+        DBWrite.insertTrainWagons(this.uid, wagon.getUid());
         Wagon[] list = new Wagon[wagons.length + 1];
         System.arraycopy(wagons, 0, list, 0, wagons.length);
         list[wagons.length] = wagon;
@@ -123,6 +131,7 @@ public class Train {
     }
 
     public void del(int number) {
+        DBDelete.delTrainWagon(this.uid, wagons[number].getUid());
         Wagon[] newWagons = new Wagon[wagons.length - 1];
         System.arraycopy(wagons, 0, newWagons, 0, number);
         System.arraycopy(wagons, number + 1, newWagons, number, wagons.length - 1 - number);

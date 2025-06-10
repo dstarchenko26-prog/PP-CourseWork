@@ -6,65 +6,38 @@ import ua.nulp.trainmanager.DPL.wagons.Loc;
 import ua.nulp.trainmanager.DPL.wagons.Passengers;
 import ua.nulp.trainmanager.DPL.wagons.Wagon;
 import ua.nulp.trainmanager.util.Logger;
+import ua.nulp.trainmanager.DPL.DPL;
 
 import java.sql.*;
 
 public class DBRead {
-    public static Wagon[] readWagons (String sId) {
-        String sql1 =
-                "SELECT wag.id, wag.name, wag.speed, wag.weight, l.traction, l.consumption, wag.type" +
-                " FROM wagons" + sId + " AS wag" +
-                " JOIN loc" + sId + " AS l ON wag.id = l.id" +
-                " WHERE wag.type = ?";
-
-        String sql2 =
-                "SELECT wag.id, wag.name, wag.speed, wag.weight, c.capacity, wag.type" +
-                " FROM wagons" + sId + " AS wag" +
-                " JOIN cargo" + sId + " AS c ON wag.id = c.id" +
-                " WHERE wag.type = ?";
-
-        String sql3 =
-                "SELECT wag.id, wag.name, wag.speed, wag.weight, pass.capacity, pass.comfort, pass.amountOfLuggage, wag.type" +
-                " FROM wagons" + sId + " AS wag" +
-                " JOIN passengers" + sId + " AS pass ON wag.id = pass.id" +
-                " WHERE wag.type = ?";
-
+    public static Wagon[] readWagons () {
+        String sql = "SELECT uid, name, speed, weight, param1, param2, param3 FROM wagons";
         Wagon[] wagons = new Wagon[0];
 
         try (   Connection conn = Database.connect();
-                PreparedStatement pstmt = conn.prepareStatement(sql1)) {
-            pstmt.setInt(1, 1);
+                var stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(sql)){
 
-            ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
-                wagons = addWagon(wagons,new Loc(rs.getString("name"), rs.getInt("speed"), rs.getInt("weight"), rs.getInt("traction"), rs.getInt("consumption")));
+                int uid = rs.getInt("uid");
+                String name = rs.getString("name");
+                int speed = rs.getInt("speed");
+                int weight = rs.getInt("weight");
+                int p1 = rs.getInt("param1");
+                int p2 = rs.getInt("param2");
+                int p3 = rs.getInt("param3");
+                if (p3 != 0) {
+                    wagons = addWagon(wagons, new Passengers(uid, name, speed, weight, p1, p2, p3));
+                } else if (p2 != 0) {
+                    wagons = addWagon(wagons, new Loc(uid, name, speed, weight, p1, p2));
+                } else {
+                    wagons = addWagon(wagons, new Cargo(uid, name, speed, weight, p1));
+                }
             }
         } catch (SQLException e) {
-            Logger.error("Помилка при зчитуванні локомотивів", "");
-        }
-
-        try (   Connection conn = Database.connect();
-                PreparedStatement pstmt = conn.prepareStatement(sql2)) {
-            pstmt.setInt(1, 2);
-
-            ResultSet rs = pstmt.executeQuery();
-            while (rs.next()) {
-                wagons = addWagon(wagons, new Cargo(rs.getString("name"), rs.getInt("speed"), rs.getInt("weight"), rs.getInt("capacity")));
-            }
-        } catch (SQLException e) {
-            Logger.error("Помилка при зчитуванні вантажних вагонів", "");
-        }
-
-        try (   Connection conn = Database.connect();
-                PreparedStatement pstmt = conn.prepareStatement(sql3)) {
-            pstmt.setInt(1, 3);
-
-            ResultSet rs = pstmt.executeQuery();
-            while (rs.next()) {
-                wagons = addWagon(wagons, new Passengers(rs.getString("name"), rs.getInt("speed"), rs.getInt("weight"), rs.getInt("capacity"), rs.getInt("comfort"), rs.getInt("amountOfLuggage")));
-            }
-        } catch (SQLException e) {
-            Logger.error("Помилка при зчитуванні пасажирських вагонів", "");
+            Logger.error("Помилка при зчитуванні вагонів", "");
+            return null;
         }
         Logger.info("Вагони зчитано");
         return wagons;
@@ -79,9 +52,9 @@ public class DBRead {
         return newWagons;
     }
 
-    public static Train[] readTrains(String sId) {
+    public static Train[] readTrains() {
         String sql =
-                "SELECT id, name FROM trains" + sId;
+                "SELECT uid, name FROM trains";
 
         Train[] trains = new Train[0];
 
@@ -90,17 +63,45 @@ public class DBRead {
              ResultSet rs = stmt.executeQuery(sql)) {
 
             while (rs.next()) {
-                int id = rs.getInt("id");
+                int id = rs.getInt("uid");
                 String name = rs.getString("name");
 
-                Wagon[] wagons = readWagons(sId + String.valueOf(id));
+                Wagon[] wagons = DPL.getWagonsByUid(readTrainsWagons(id));
 
-                trains = addTrain(trains, new Train(name, wagons));
+                trains = addTrain(trains, new Train(id, name, wagons));
             }
         } catch (SQLException e) {
             Logger.error("Помилка при зчитуванні поїздів", "");
         }
         return trains;
+    }
+
+    private static int[] readTrainsWagons(int uid) {
+        String sql = "SELECT uid_t, uid_w" +
+                " FROM trains_wagons" +
+                " WHERE uid_t = ?";
+        int uids[] = new int[0];
+
+        try (   Connection conn = Database.connect();
+                PreparedStatement pstmt = conn.prepareStatement(sql)){
+            pstmt.setInt(1, uid);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                uids = addUid(uids, rs.getInt("uid_w"));
+            }
+        } catch (SQLException e) {
+            Logger.error("Помилка при зчитуванні приналежності вагонів", "");
+        }
+        return  uids;
+    }
+
+    private static int[] addUid(int[] uids, int uid) {
+        int[] newUids = new int[uids.length + 1];
+        for (int i = 0; i < uids.length; i++) {
+            newUids[i] = uids[i];
+        }
+        newUids[uids.length] = uid;
+        return newUids;
     }
 
     private static Train[] addTrain(Train[] trains, Train train) {

@@ -280,7 +280,7 @@ public class TrainsMenuUIController {
             icon1.setFitWidth(128);
             icon1.setFitHeight(128);
             delButton.setGraphic(icon1);
-            delButton.setId("trBTNdel" + i);
+            delButton.setId("trBTNdel" + trains[i].getUid());
             delButton.setMaxWidth(Double.MAX_VALUE);
             Button redactButton = new Button();
             Image image2 = new Image(getClass().getResourceAsStream("/ua/nulp/trainmanager/UI/icon/redactICO.png"));
@@ -288,7 +288,7 @@ public class TrainsMenuUIController {
             icon2.setFitWidth(128);
             icon2.setFitHeight(128);
             redactButton.setGraphic(icon2);
-            redactButton.setId("trBTNredact" + i);
+            redactButton.setId("trBTNredact" + trains[i].getUid());
             redactButton.setMaxWidth(Double.MAX_VALUE);
 
             delButton.setOnAction(event -> {
@@ -300,9 +300,9 @@ public class TrainsMenuUIController {
                     }
                     c = j;
                 }
-                String cut = sId.substring(c, c + 1);
-                int id = Integer.parseInt(cut);
-                DPL.delTrain(id);
+                String cut = sId.substring(c, sId.length());
+                int uid = Integer.parseInt(cut);
+                DPL.delTrain(uid);
                 printTrains();
             });
 
@@ -315,13 +315,13 @@ public class TrainsMenuUIController {
                     }
                     c = j;
                 }
-                String cut = sId.substring(c, c + 1);
-                int id = Integer.parseInt(cut);
-                DPL.id = id;
+                String cut = sId.substring(c, sId.length());
+                int uid = Integer.parseInt(cut);
+                DPL.id = DPL.getTrainId(uid);
                 try {
                     FXMLLoader loader = new FXMLLoader(Main.class.getResource("UI/TrainRedactorUI.fxml"));
                     Parent root = loader.load();
-                    Logger.info("Відкрито редагування поїзда: " + DPL.trains[id].getString());
+                    Logger.info("Відкрито редагування поїзда: " + DPL.trains[DPL.id].getString());
                     Stage modalStage = new Stage();
                     modalStage.initModality(Modality.APPLICATION_MODAL);
                     modalStage.setTitle("Редактор");

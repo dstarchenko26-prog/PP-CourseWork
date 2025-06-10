@@ -21,6 +21,9 @@ import java.io.IOException;
 public class WagonsMenuUIController {
 
     @FXML
+    private Label lblError;
+
+    @FXML
     private Button addBTN;
 
     @FXML
@@ -93,7 +96,6 @@ public class WagonsMenuUIController {
     }
 
     private Wagon[] checkFilter() {
-
         if (DPL.FW) {
             Wagon[] wagons = DPL.wagons;
             Wagon[] fWagons = new Wagon[0];
@@ -318,7 +320,7 @@ public class WagonsMenuUIController {
             icon.setFitWidth(128);
             icon.setFitHeight(128);
             delButton.setGraphic(icon);
-            delButton.setId("wagBTNdel" + i);
+            delButton.setId("wagBTNdel" + wagons[i].getUid());
             delButton.setMaxWidth(Double.MAX_VALUE);
             delButton.setOnAction(event -> {
                 String sId = ((Button) event.getSource()).getId();
@@ -329,10 +331,14 @@ public class WagonsMenuUIController {
                     }
                     c = j;
                 }
-                String cut = sId.substring(c, c + 1);
+                String cut = sId.substring(c, sId.length());
                 int id = Integer.parseInt(cut);
-                DPL.delWagon(id);
-                printWagons();
+                if (DPL.delWagon(id)) {
+                    lblError.setText("");
+                    printWagons();
+                } else {
+                    lblError.setText("Вагон використовується");
+                }
             });
 
             GridPane wagonCard = new GridPane();

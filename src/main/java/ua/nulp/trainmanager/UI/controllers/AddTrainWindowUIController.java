@@ -5,7 +5,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import ua.nulp.trainmanager.DPL.DPL;
-import ua.nulp.trainmanager.DPL.train.Train;
 import ua.nulp.trainmanager.util.Logger;
 
 public class AddTrainWindowUIController {
@@ -22,7 +21,7 @@ public class AddTrainWindowUIController {
 
             Logger.info("Спроба додати локомотив");
 
-            DPL.addTrain(new Train(name));
+            DPL.addTrain(name);
 
             Stage stage = (Stage) btnSubmit.getScene().getWindow();
             stage.close();

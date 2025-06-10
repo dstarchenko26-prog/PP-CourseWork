@@ -6,7 +6,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import ua.nulp.trainmanager.DPL.DPL;
-import ua.nulp.trainmanager.DPL.wagons.Passengers;
 import ua.nulp.trainmanager.util.Logger;
 
 public class AddPassFormUIController {
@@ -114,7 +113,7 @@ public class AddPassFormUIController {
 
             lblError.setText("");
 
-            DPL.addWagon(new Passengers(name, speed, weight, capacity, comfort, luggage));
+            DPL.addWagon(name, speed, weight, capacity, comfort, luggage);
 
             Stage stage = (Stage) btnSubmit.getScene().getWindow();
             stage.close();

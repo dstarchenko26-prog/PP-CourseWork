@@ -6,8 +6,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import ua.nulp.trainmanager.DPL.DPL;
-import ua.nulp.trainmanager.DPL.database.DBWrite;
 import ua.nulp.trainmanager.Main;
 import ua.nulp.trainmanager.util.Logger;
 
@@ -44,8 +42,6 @@ public class MainUIController {
 
     @FXML
     protected void exitEvent() throws IOException {
-        DBWrite.saveWagons(DPL.wagons, "");
-        DBWrite.saveTrains(DPL.trains, "");
         Platform.exit();
     }
 }

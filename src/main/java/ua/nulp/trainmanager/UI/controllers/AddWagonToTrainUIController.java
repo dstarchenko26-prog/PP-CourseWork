@@ -145,7 +145,7 @@ public class AddWagonToTrainUIController {
                     }
                     c = j;
                 }
-                String cut = sId.substring(c, c + 1);
+                String cut = sId.substring(c, sId.length());
                 int id = Integer.parseInt(cut);
                 if (!DPL.trains[DPL.id].preAdd(DPL.wagons[id])) {
                     lblError.setText("Вага перевищить тягу");

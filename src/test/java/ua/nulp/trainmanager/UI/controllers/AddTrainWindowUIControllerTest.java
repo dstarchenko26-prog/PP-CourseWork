@@ -4,6 +4,7 @@ import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 import ua.nulp.trainmanager.DPL.DPL;
+import ua.nulp.trainmanager.DPL.database.Database;
 import ua.nulp.trainmanager.DPL.train.Train;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -11,6 +12,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class AddTrainWindowUIControllerTest extends ApplicationTest {
     @Override
     public void start(Stage stage) throws Exception {
+        Database.DB_NAME = "test.db";
         DPL.trains = new Train[0];
 
         javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(

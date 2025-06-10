@@ -5,28 +5,49 @@ import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 import ua.nulp.trainmanager.DPL.DPL;
+import ua.nulp.trainmanager.DPL.database.DBInit;
+import ua.nulp.trainmanager.DPL.database.Database;
 import ua.nulp.trainmanager.DPL.train.Train;
-import ua.nulp.trainmanager.DPL.wagons.Cargo;
-import ua.nulp.trainmanager.DPL.wagons.Loc;
-import ua.nulp.trainmanager.DPL.wagons.Passengers;
 import ua.nulp.trainmanager.DPL.wagons.Wagon;
+
+import java.sql.Connection;
+import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class TrainRedactorUIControllerTest extends ApplicationTest {
+
+    private void clearTable() {
+        Database.DB_NAME = "test.db";
+        String sql1 = "DELETE FROM wagons";
+        String sql2 = "DELETE FROM trains";
+        String sql3 = "DELETE FROM trains_wagons";
+
+        try (Connection conn = Database.connect();
+             var stmt = conn.createStatement()){
+            stmt.executeUpdate(sql1);
+            stmt.executeUpdate(sql2);
+            stmt.executeUpdate(sql3);
+        } catch (SQLException e) {
+
+        }
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
-        DPL.wagons = new Wagon[3];
-        Loc loc = new Loc("TL", 120, 60, 600, 10);
-        Cargo cargo = new Cargo("TC", 100, 120, 90);
-        Passengers pass = new Passengers("TP", 140, 45,100, 50, 75);
-        DPL.wagons[0] = loc;
-        DPL.wagons[1] = pass;
-        DPL.wagons[2] = cargo;
+        Database.DB_NAME = "test.db";
+        DBInit.createTable();
+        clearTable();
+        DPL.trains = new Train[0];
+        DPL.wagons = new Wagon[0];
+        DPL.addWagon("TL", 120, 60, 600, 10, 0);
+        DPL.addWagon("TC", 100, 120, 90, 0, 0);
+        DPL.addWagon("TP", 140, 45,100, 50, 75);
+        DPL.addTrain("test");
         DPL.id = 0;
-        DPL.trains = new Train[1];
-        Train tr = new Train("test", DPL.wagons);
-        DPL.trains[0] = tr;
+        DPL.trains[0].add(DPL.wagons[0]);
+        DPL.trains[0].add(DPL.wagons[1]);
+        DPL.trains[0].add(DPL.wagons[2]);
 
         javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(
                 getClass().getResource("/ua/nulp/trainmanager/UI/TrainRedactorUI.fxml")

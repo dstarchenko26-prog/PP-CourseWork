@@ -13,6 +13,7 @@
     <top>
         <VBox fx:id="VTCON" alignment="CENTER">
             <Label fx:id="header">Управління вагонами</Label>
+            <Label fx:id="lblError"></Label>
         </VBox>
     </top>
 

@@ -5,6 +5,7 @@ import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 import ua.nulp.trainmanager.DPL.DPL;
+import ua.nulp.trainmanager.DPL.database.Database;
 import ua.nulp.trainmanager.DPL.wagons.Cargo;
 import ua.nulp.trainmanager.DPL.wagons.Wagon;
 
@@ -23,12 +24,13 @@ class AddCargoFormUIControllerTest extends ApplicationTest {
     @Test
     void testValidInput() {
         DPL.wagons = new Wagon[0];
+        Database.DB_NAME = "test.db";
         clickOn("#tfName").write("test");
         clickOn("#tfSpeed").write("1");
         clickOn("#tfWeight").write("2");
         clickOn("#tfCapacity").write("3");
         clickOn("#btnSubmit");
-        Cargo cargo = new Cargo("test", 1, 2, 3);
+        Cargo cargo = new Cargo(0,"test", 1, 2, 3);
         Wagon[] wagons = new Wagon[1];
         wagons[0] = cargo;
 
@@ -37,6 +39,7 @@ class AddCargoFormUIControllerTest extends ApplicationTest {
 
     @Test
     void testInvalidInput() {
+        Database.DB_NAME = "test.db";
         clickOn("#btnSubmit");
         Label messageLabel = lookup("#lblError").query();
         assertEquals("Будь ласка, заповніть усі поля.", messageLabel.getText());

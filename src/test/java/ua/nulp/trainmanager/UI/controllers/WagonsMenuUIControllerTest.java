@@ -6,28 +6,46 @@ import javafx.stage.Window;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 import ua.nulp.trainmanager.DPL.DPL;
-import ua.nulp.trainmanager.DPL.wagons.Cargo;
-import ua.nulp.trainmanager.DPL.wagons.Loc;
-import ua.nulp.trainmanager.DPL.wagons.Passengers;
+import ua.nulp.trainmanager.DPL.database.DBInit;
+import ua.nulp.trainmanager.DPL.database.DBWrite;
+import ua.nulp.trainmanager.DPL.database.Database;
 import ua.nulp.trainmanager.DPL.wagons.Wagon;
+
+import java.sql.Connection;
+import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class WagonsMenuUIControllerTest extends ApplicationTest {
 
+    private void clearTable() {
+        Database.DB_NAME = "test.db";
+        String sql1 = "DELETE FROM wagons";
+        String sql2 = "DELETE FROM trains";
+        String sql3 = "DELETE FROM trains_wagons";
+
+        try (Connection conn = Database.connect();
+             var stmt = conn.createStatement()){
+            stmt.executeUpdate(sql1);
+            stmt.executeUpdate(sql2);
+            stmt.executeUpdate(sql3);
+        } catch (SQLException e) {
+
+        }
+    }
+
     @Override
     public void start(Stage stage) throws Exception {
-
-        DPL.wagons = new Wagon[6];
-        Loc loc = new Loc("TL", 120, 60, 600, 10);
-        Cargo cargo = new Cargo("TC", 100, 120, 90);
-        Passengers pass = new Passengers("TP", 140, 45,100, 50, 75);
-        DPL.wagons[0] = loc;
-        DPL.wagons[1] = pass;
-        DPL.wagons[2] = cargo;
-        DPL.wagons[3] = loc;
-        DPL.wagons[4] = pass;
-        DPL.wagons[5] = cargo;
+        Database.DB_NAME = "test.db";
+        DBInit.createTable();
+        clearTable();
+        DPL.wagons = new Wagon[0];
+        DPL.addWagon("TL1", 120, 60, 600, 10, 0);
+        DPL.addWagon("TC1", 100, 120, 90, 0, 0);
+        DPL.addWagon("TP1", 140, 45,100, 50, 75);
+        DPL.addWagon("TL2", 120, 60, 600, 10, 0);
+        DPL.addWagon("TC2", 100, 120, 90, 0, 0);
+        DPL.addWagon("TP2", 140, 45,100, 50, 75);
 
         javafx.fxml.FXMLLoader loader = new javafx.fxml.FXMLLoader(
                 getClass().getResource("/ua/nulp/trainmanager/UI/WagonsMenuUI.fxml")
@@ -64,7 +82,7 @@ class WagonsMenuUIControllerTest extends ApplicationTest {
 
     @Test void filt2() {
         DPL.FW = true;
-        DPL.usParams.FiltWParams(1, 200, 200, 1, 200, 1, 1, 1,"TL", 1);
+        DPL.usParams.FiltWParams(1, 200, 200, 1, 200, 1, 1, 1,"TL1", 1);
     }
 
     @Test void filt3() {
@@ -120,10 +138,19 @@ class WagonsMenuUIControllerTest extends ApplicationTest {
 
     @Test void testDelBTN() {
         Wagon[] wagons = new Wagon[5];
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 2; i++) {
+            wagons[i] = DPL.wagons[i];
+        }
+        for (int i = 2; i < 5; i++) {
             wagons[i] = DPL.wagons[i + 1];
         }
-        clickOn("#wagBTNdel0");
+        String query = "#wagBTNdel" + DPL.wagons[2].getUid();
+        DPL.FW = false;
+        clickOn(query);
+        assertTrue(eqWags(wagons, DPL.wagons));
+        DBWrite.insertTrainWagons(0, DPL.wagons[0].getUid());
+        query = "#wagBTNdel" + DPL.wagons[0].getUid();
+        clickOn(query);
         assertTrue(eqWags(wagons, DPL.wagons));
     }
 

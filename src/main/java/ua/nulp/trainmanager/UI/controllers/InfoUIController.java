@@ -8,7 +8,6 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import ua.nulp.trainmanager.DPL.DPL;
 import ua.nulp.trainmanager.Main;
 import ua.nulp.trainmanager.util.Logger;
 
@@ -30,7 +29,6 @@ public class InfoUIController {
                 Parent newRoot = FXMLLoader.load(Main.class.getResource("UI/MainUI.fxml"));
                 Scene newScene = new Scene(newRoot, 1120, 630);
                 Logger.info("Повернення до головного меню");
-                DPL.FW = false;
                 Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
                 stage.setScene(newScene);
             } catch (IOException e) {

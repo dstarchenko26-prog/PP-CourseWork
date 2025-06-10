@@ -5,6 +5,7 @@ import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit5.ApplicationTest;
 import ua.nulp.trainmanager.DPL.DPL;
+import ua.nulp.trainmanager.DPL.database.Database;
 import ua.nulp.trainmanager.DPL.wagons.Passengers;
 import ua.nulp.trainmanager.DPL.wagons.Wagon;
 
@@ -23,6 +24,7 @@ class AddPassFormUIControllerTest extends ApplicationTest {
     @Test
     void testValidInput() {
         DPL.wagons = new Wagon[0];
+        Database.DB_NAME = "test.db";
         clickOn("#tfName").write("test");
         clickOn("#tfSpeed").write("1");
         clickOn("#tfWeight").write("2");
@@ -30,7 +32,7 @@ class AddPassFormUIControllerTest extends ApplicationTest {
         clickOn("#tfComfort").write("4");
         clickOn("#tfLuggage").write("5");
         clickOn("#btnSubmit");
-        Passengers pass = new Passengers("test", 1, 2, 3, 4, 5);
+        Passengers pass = new Passengers(0,"test", 1, 2, 3, 4, 5);
         Wagon[] wagons = new Wagon[1];
         wagons[0] = pass;
 
@@ -39,6 +41,7 @@ class AddPassFormUIControllerTest extends ApplicationTest {
 
     @Test
     void testInvalidInput() {
+        Database.DB_NAME = "test.db";
         clickOn("#btnSubmit");
         Label messageLabel = lookup("#lblError").query();
         assertEquals("Будь ласка, заповніть усі поля.", messageLabel.getText());

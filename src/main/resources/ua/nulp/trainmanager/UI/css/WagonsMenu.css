@@ -3,6 +3,10 @@
     -fx-padding: 20px
 }
 
+#lblError {
+    -fx-text-fill: red
+}
+
 #header {
     -fx-font-size: 48px; -fx-font-weight: bold; -fx-text-fill: white
 }

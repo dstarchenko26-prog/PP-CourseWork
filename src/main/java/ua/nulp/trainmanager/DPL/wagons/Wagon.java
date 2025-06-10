@@ -1,15 +1,19 @@
 package ua.nulp.trainmanager.DPL.wagons;
 
 public abstract class Wagon {
+    private final int uid;
     private final String name;
     private final int speed;
     private final int weight;
 
-    public Wagon(String name, int speed, int weight) {
+    public Wagon(int uid, String name, int speed, int weight) {
+        this.uid = uid;
         this.name = name;
         this.speed = speed;
         this.weight = weight;
     }
+
+    public int getUid() {return uid; }
 
     public String getName() {
         return name;

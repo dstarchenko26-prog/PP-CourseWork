@@ -5,7 +5,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import ua.nulp.trainmanager.DPL.wagons.Loc;
 import ua.nulp.trainmanager.DPL.DPL;
 import ua.nulp.trainmanager.util.Logger;
 
@@ -98,7 +97,7 @@ public class AddLocFormUIController {
 
             lblError.setText("");
 
-            DPL.addWagon(new Loc(name, speed, weight, traction, consumption));
+            DPL.addWagon(name, speed, weight, traction, consumption, 0);
 
             Stage stage = (Stage) btnSubmit.getScene().getWindow();
             stage.close();

@@ -4,14 +4,14 @@ public class Loc extends Wagon {
     private final int traction;
     private final int consumption;
 
-    public Loc(String name, int speed, int weight, int traction, int consumption) {
-        super(name, speed, weight);
+    public Loc(int uid, String name, int speed, int weight, int traction, int consumption) {
+        super(uid, name, speed, weight);
         this.traction = traction;
         this.consumption = consumption;
     }
 
     public Loc get() {
-        return new Loc(this.getName(), this.getSpeed(), this.getWeight(), this.traction, this.consumption);
+        return new Loc(this.getUid(), this.getName(), this.getSpeed(), this.getWeight(), this.getTraction(), this.getConsumption());
     }
 
     public String getString() {
